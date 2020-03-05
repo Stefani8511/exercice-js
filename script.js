@@ -1,56 +1,64 @@
-const form = document.getElementById('form')
-const username = document.getElementById('username')
-const email = document.getElementById('email')
-const password = document.getElementById('password')
-const password2 = document.getElementById('password2')
+const form = document.getElementById("form");
+const username = document.getElementById("username");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const password2 = document.getElementById("password2");
 
-form.addEventListener("submit",(event) => {
+form.addEventListener("submit", event => {
+  event.preventDefault();
+  checkRequired([username, email, password, password2]);
+  checkLength(username, 3, 15);
+  checkLength(password, 3, 15);
+  checkEmail(email);
+  passwordMatch(password, password2);
+});
 
-    event.preventDefault()
-    console.log(username.value)
-    if(username.value === ''){
-       showError(username, 'Ce champs est requis')
+const checkRequired = inputArr => {
+  inputArr.forEach(input => {
+    if (input.value.trim() === "") {
+      showError(input, "Ce champs est requis");
+    } else {
+      showSuccess(input);
     }
-    else{
-        showSuccess(username)
-    }
-    if(email.value === ''){
-        showError(email, 'Ce champs est requis')
-     }
-     else if(!checkEmail(email.value)){
-        showError(email, "L'email n'est pas valide")
-     }
-     else{
-         showSuccess(email)
-     }
-     if(password.value === ''){
-        showError(password, 'Ce champs est requis')
-     }
-     else{
-         showSuccess(password)
-     }
-     if(password2.value === ''){
-        showError(password2, 'Ce champs est requis')
-     }
-     else{
-         showSuccess(password2)
-     }
-})
+  });
+};
+const checkLength = (input, min, max) => {
+  if (input.value.length < min) {
+    showError(input, `Ce champ doit comporter au minimum ${min} caractères !`);
+  } else if (input.value.length > max) {
+    showError(input, `Ce champ ne doit pas excéder ${max} caractères !`);
+  } else {
+    showSuccess(input);
+  }
+};
+const showError = (input, message) => {
+  const formControl = input.parentElement;
+  formControl.className = " form-control error";
+  const small = formControl.querySelector("small");
+  small.innerText = message;
+};
+const showSuccess = input => {
+  const formControl = input.parentElement;
+  formControl.className = " form-control success";
+};
+const checkEmail = input => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const showError = (input, message)=>{
-    const formControl = input.parentElement
-    formControl.className ="form-control error"
-    const small = formControl.querySelector('small')
-    small.innerText = message
-}
+  if (re.test(input.value)) {
+    showSuccess(input);
+  } else {
+    showError(input, "L'email n'est pas valide !");
+  }
+};
+const passwordMatch = (input1, input2) => {
+  if (input1.value !== input2.value) {
 
-const showSuccess = (input) => {
-    const formControl = input.parentElement
-    formControl.className ="form-control success"
-   
-}
+// SI la valeur de l'input 1 est différente de la valeur de l'input 2 alors:
 
-const checkEmail = (email) =>{
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
+    showError(input2, " Le mot de passe ne correspond pas");
+  } else {
+    
+// SINON :
+    showSuccess(input);
+  }
+};
