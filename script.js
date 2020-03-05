@@ -62,3 +62,12 @@ const passwordMatch = (input1, input2) => {
     showSuccess(input);
   }
 };
+
+const passwordMatch = (input1, input2) => {
+if (input1.value('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)#', $password)) {
+     showSuccess (input,"Mot de passe conforme")
+
+}else {
+    showError(input, "Mot de passe non conforme")
+}  
+}
