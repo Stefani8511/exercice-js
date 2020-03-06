@@ -14,7 +14,7 @@ form.addEventListener("submit", event => {
   checkLength(password, 3, 15);
   checkEmail(email);
   passwordMatch(password, password2);
-  //checkPassword(password, password2);
+  checkPassword(password, password2);
  
 });
 
@@ -56,15 +56,15 @@ const checkEmail = input => {
   }
 };
 const passwordMatch = (input1, input2) =>{
-  const regExp2 = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
+  //const regExp2 = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
   if (input1.value !== input2.value ){
 
 // SI la valeur de l'input 1 est différente de la valeur de l'input 2 alors:
 
     showError(input2, " Le mot de passe ne correspond pas");
   
-  }else if(input1.value !== (regExp2.test(input.value))){
-    showError(input, "Mot de passe non conforme")
+  //}else if(input.value !== (regExp2.test(input.value))){
+    //showError(input, "Mot de passe non conforme")
   }
    else {
     
@@ -75,7 +75,7 @@ const passwordMatch = (input1, input2) =>{
 
 
 //Possibililité fonctionnelle que sur un mot de passe1 :-(
-  /*
+  
 const checkPassword = (input ) => {
   const re2 = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
 if (re2.test (input.value))  {
@@ -84,4 +84,4 @@ if (re2.test (input.value))  {
 else {
     showError(input, "Mot de passe non conforme")
 }  
-}*/
+}
